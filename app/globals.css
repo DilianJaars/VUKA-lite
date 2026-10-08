@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --lime: #c6ff00;
+  --bg: #0a0a0a;
+  --card: #1a1a1a;
+  --start: #ff3b30;
+  color-scheme: dark;
+}
+
+html, body { background: var(--bg); color: #fff; }
+body {
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+  min-height: 100dvh;
+}
+h1, h2, h3, .font-heading { font-family: Outfit, system-ui, sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+.font-mono, .stat { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+button { touch-action: manipulation; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .glass {
+    background: rgba(26, 26, 26, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 20px;
+  }
+  .card { background: var(--card); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 20px; }
+  .brut { border: 2px solid #fff; box-shadow: 4px 4px 0 var(--lime); }
+  .btn { @apply inline-flex items-center justify-center gap-2 font-heading font-extrabold uppercase tracking-wide rounded-full px-6 min-h-[56px] text-base active:scale-[0.97] transition-transform select-none; }
+  .btn-lime { @apply btn bg-lime text-black; }
+  .btn-ghost { @apply btn bg-white/10 text-white border border-white/15; }
+  .btn-red { @apply btn bg-start text-white; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 min-h-[36px] text-[13px] font-semibold border border-white/15 bg-white/5 whitespace-nowrap; }
+  .chip-on { @apply bg-lime text-black border-lime; }
+  .label { @apply text-[11px] uppercase tracking-[0.14em] text-white/55 font-semibold; }
+  .input { @apply w-full min-h-[52px] rounded-2xl bg-white/5 border border-white/15 px-4 text-base text-white placeholder:text-white/35; }
+  .skeleton { background: linear-gradient(90deg, #151515, #1f1f1f, #151515); background-size: 200% 100%; animation: sk 1.2s linear infinite; }
+}
+
+@keyframes sk { to { background-position: -200% 0; } }
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(255,59,48,.55); } 100% { box-shadow: 0 0 0 38px rgba(255,59,48,0); } }
+.pulse-ring { animation: pulse-ring 2s ease-out infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+.blink { animation: blink 1.2s steps(2) infinite; }
+
+.data-saver .glass { backdrop-filter: none; -webkit-backdrop-filter: none; background: #161616; }
+.data-saver .pulse-ring, .data-saver .blink, .data-saver .skeleton { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+.pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 8px); }
+.pt-safe { padding-top: env(safe-area-inset-top); }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* Leaflet - dark mode tiles + no-tiles grid (data saver) */
+.leaflet-container { background: #111; font-family: Inter, sans-serif; outline: 0; }
+.leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.92) saturate(0.55); }
+.leaflet-container.no-tiles {
+  background-color: #0f0f0f;
+  background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.leaflet-control-attribution { background: rgba(0,0,0,.55) !important; color: #aaa !important; font-size: 9px !important; }
+.leaflet-control-attribution a { color: #c6ff00 !important; }
+
+.recharts-text { fill: rgba(255,255,255,.55); font-size: 11px; }
+.recharts-cartesian-grid line { stroke: rgba(255,255,255,.07); }
